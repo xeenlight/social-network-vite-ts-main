@@ -1,9 +1,16 @@
 import { SButton } from "./Button.style";
-type TButton={
-  buttonText:string
+
+type TButton = {
+  buttonText: string;
+  disabled?: boolean; 
+  type?: 'button' | 'submit' | 'reset'; 
 }
-export const Button = ({buttonText}:TButton) => {
-  return(
- <SButton>{buttonText}</SButton>
+
+export const Button = ({ buttonText, disabled, type = 'button' }: TButton) => {
+  return (
+    <SButton type={type} disabled={disabled}>
+      {buttonText}
+    </SButton>
   )
 }
+

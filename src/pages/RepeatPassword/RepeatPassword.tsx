@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom"; 
 import "./RepeatPassword.scss";
+import { Button } from "../../components/UI/Button/Button";
+
 
 export const RepeatPassword = () => {
   const [password, setPassword] = useState("");
@@ -53,9 +55,10 @@ export const RepeatPassword = () => {
             value={confirmPassword}
             onChange={handleConfirmPasswordChange}
           />
-          <button type="submit" disabled={isButtonDisabled}>
-            Восстановить пароль
-          </button>
+          <Button
+          disabled={isButtonDisabled}
+          buttonText="Восстановить пароль"
+          type="submit"/>
         </form>
       </div>
     </div>

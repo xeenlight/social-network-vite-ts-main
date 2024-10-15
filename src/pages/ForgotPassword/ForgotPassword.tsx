@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom"; 
 import "./ForgotPassword.scss";
+import { Button } from "../../components/UI/Button/Button";
+
 
 export const ForgotPassword = () => {
   const [phoneNumber, setPhoneNumber] = useState("");
@@ -28,7 +30,9 @@ export const ForgotPassword = () => {
             value={phoneNumber}
             onChange={handleInputChange}
           />
-          <button disabled={!phoneNumber}>Отправить</button>
+          <Button
+          disabled={!phoneNumber}
+          buttonText="Отправить"/>
         </form>
       </div>
     </div>
