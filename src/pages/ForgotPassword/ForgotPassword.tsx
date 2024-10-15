@@ -1,21 +1,21 @@
-import { useState } from "react";
-import { useNavigate } from "react-router-dom"; 
-import "./ForgotPassword.scss";
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { Button } from "../../components/UI/Button/Button";
-
+import "./ForgotPassword.scss";
 
 export const ForgotPassword = () => {
   const [phoneNumber, setPhoneNumber] = useState("");
-  const navigate = useNavigate(); 
+  const navigate = useNavigate();
 
-  const handleInputChange = (event) => {
-    setPhoneNumber(event.target.value);
+  const handleInputChange = (e) => {
+    setPhoneNumber(e.target.value);
   };
 
-  const handleSubmit = (event) => {
-    event.preventDefault(); 
-
-    navigate("/phoneSMS-page");
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (phoneNumber) {
+      navigate("/phoneSMS-page");
+    }
   };
 
   return (
@@ -30,9 +30,9 @@ export const ForgotPassword = () => {
             value={phoneNumber}
             onChange={handleInputChange}
           />
-          <Button
-          disabled={!phoneNumber}
-          buttonText="Отправить"/>
+          <Button type="submit" disabled={!phoneNumber} buttonText="Отправить"/>
+            
+
         </form>
       </div>
     </div>
