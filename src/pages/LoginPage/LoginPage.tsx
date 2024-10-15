@@ -10,7 +10,7 @@ export const LoginPage = () => {
         <input type="password" placeholder="Пароль" />
         <button>Войти</button>
       </form>
-      <a href="#">Забыли пароль?</a>
+      <a href="/forgotPassword-page">Забыли пароль?</a>
       <div className="registration">
         <span>
           У вас нет аккаунта? <a href="#">Зарегистрироваться</a>
