@@ -1,3 +1,4 @@
+import { Button } from "../../components/UI/Button/Button";
 import "./LoginPage.scss";
 
 export const LoginPage = () => {
@@ -8,7 +9,7 @@ export const LoginPage = () => {
       <form action="#">
         <input type="tel" placeholder="Номер телефона" />
         <input type="password" placeholder="Пароль" />
-        <button>Войти</button>
+        <Button buttonText="Войти"/>
       </form>
       <a href="/forgotPassword-page">Забыли пароль?</a>
       <div className="registration">
