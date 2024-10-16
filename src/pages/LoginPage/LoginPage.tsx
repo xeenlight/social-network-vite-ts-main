@@ -1,17 +1,19 @@
-import { Button } from "../../components/UI/Button/Button";
 import "./LoginPage.scss";
+import { Heading } from "../../components/Typography/Heading";
+import { Linktext } from "../../components/Typography/Linktext";
+import { Button } from "../../components/UI/Button/Button";
 
 export const LoginPage = () => {
   return (
     <div className="container">
       <div className="LoginPage">
-      <h1>Авторизация</h1>
+      <Heading headingText="Авторизация"/>
       <form action="#">
         <input type="tel" placeholder="Номер телефона" />
         <input type="password" placeholder="Пароль" />
         <Button buttonText="Войти"/>
       </form>
-      <a href="/forgotPassword-page">Забыли пароль?</a>
+      <Linktext text="Забыли пароль?"/>
       <div className="registration">
         <span>
           У вас нет аккаунта? <a href="#">Зарегистрироваться</a>
