@@ -13,7 +13,7 @@ export const LoginPage = () => {
         <input type="password" placeholder="Пароль" />
         <Button buttonText="Войти"/>
       </form>
-      <Linktext text="Забыли пароль?"/>
+      <Linktext text="Забыли пароль?" href="/forgotPassword-page" />
       <div className="registration">
         <span>
           У вас нет аккаунта? <a href="#">Зарегистрироваться</a>
