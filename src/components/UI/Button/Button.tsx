@@ -1,16 +1,15 @@
 import { SButton } from "./Button.style";
 
-type TButton = {
+interface TButton extends React.ButtonHTMLAttributes<HTMLButtonElement>{
   buttonText: string;
-  disabled?: boolean; 
-  type?: 'button' | 'submit' | 'reset'; 
+  isPrimary: boolean;
 }
 
-export const Button = ({ buttonText, disabled, type = 'button' }: TButton) => {
+export const Button = ({ buttonText, isPrimary}: TButton) => {
   return (
-    <SButton type={type} disabled={disabled}>
+    <SButton isPrimary={isPrimary}>
       {buttonText}
     </SButton>
   )
-}
+} 
 

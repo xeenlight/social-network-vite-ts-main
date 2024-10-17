@@ -1,27 +1,39 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
+interface StyledButtonProps {
+  isPrimary?: boolean;
+}
 
-export const SButton = styled.button`
+export const SButton = styled.button<StyledButtonProps>`
+    width: 100%;
+    margin-bottom: 30px;
+  border: 1px solid transparent;
+  outline: 0;
+  font-family: inherit;
+
   cursor: pointer;
   padding: 12px 15px;
   font-size: inherit;
   border-radius: 10px;
-  background-color: var(--prime-color);
+  background-color: ${(props) => props.theme.colors.primeColor};
   color: white;
   transition: 200ms;
 
   &:disabled {
-    background-color: var(--disabled-bgc);
+    background-color: ${(props) => props.theme.colors.disabledBgc};
+  }
+  ${(props) =>
+    props.isPrimary
+      ? css`
+          background-color: ${(props) => props.theme.colors.primeColor};
+          color: white;
+        `
+      : css`
+          background-color: ${(props) => props.theme.colors.lightGray};
+          color: ${(props) => props.theme.colors.placeholderColor};
+        `
+      
   }
 
-  &.primary {
-    background-color: var(--prime-color);
-    color: white;
-  }
-
-  &.secondary {
-    background-color: var(--light-gray);
-    color: var(--placeholder-color);
-  }
 
   &:disabled:hover {
     cursor: default;
@@ -38,4 +50,10 @@ export const SButton = styled.button`
     translate: 0 0;
     box-shadow: none;
   }
+  @media (max-width: 730px) {
+
+padding: 10px 12px;
+
+}
+  
 `;

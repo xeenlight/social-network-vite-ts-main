@@ -2,6 +2,10 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom"; 
 import "./RepeatPassword.scss";
 import { Button } from "../../components/UI/Button/Button";
+import { Container } from "../../components/UI/Container/Contaainer.style";
+import { Heading } from "../../components/Typography/Heading";
+import { Paragraph } from "../../components/Typography/Paragraph";
+import { Input } from "../../components/UI/Input/Input";
 
 
 export const RepeatPassword = () => {
@@ -38,29 +42,32 @@ export const RepeatPassword = () => {
   };
 
   return (
-    <div className="container">
+    <Container>
       <div className="RepeatPassword">
-        <h1>Придумайте пароль</h1>
-        <p>Введите новый пароль для вашей учетной записи. Пароль должен содержать не менее 8 символов, включая заглавные и строчные буквы, цифры и специальные символы.</p>
+        <Heading headingText="Придумайте пароль" />
+        <Paragraph
+          headingText="Введите новый пароль для вашей учетной записи. Пароль должен содержать не менее 8 символов, включая заглавные и строчные буквы, цифры и специальные символы."
+        />
         <form onSubmit={handleSubmit}>
-          <input
+          <Input
             type="password"
             placeholder="Введите новый пароль"
             value={password}
             onChange={handlePasswordChange}
           />
-          <input
+          <Input
             type="password"
             placeholder="Повторите пароль"
             value={confirmPassword}
             onChange={handleConfirmPasswordChange}
           />
           <Button
-          disabled={isButtonDisabled}
-          buttonText="Восстановить пароль"
-          type="submit"/>
+            type="submit"
+            isPrimary={!isButtonDisabled}
+            buttonText="Восстановить парол"
+          />
         </form>
       </div>
-    </div>
+    </Container>
   );
 };

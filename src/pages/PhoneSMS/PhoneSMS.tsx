@@ -1,6 +1,10 @@
 import { useState, useEffect } from "react";
 import "./PhoneSMS.scss";
 import { useNavigate } from "react-router-dom";
+import { Container } from "../../components/UI/Container/Contaainer.style";
+import { Heading } from "../../components/Typography/Heading";
+import { Paragraph } from "../../components/Typography/Paragraph";
+import { Input } from "../../components/UI/Input/Input";
 
 export const PhoneSMS = () => {
   const [code, setCode] = useState(["", "", "", ""]);
@@ -46,20 +50,20 @@ export const PhoneSMS = () => {
   };
 
   return (
-    <div className="container">
+    <Container>
       <div className="PhoneSMS">
-        <h1>Введите код</h1>
-        <p>
-          Пожалуйста, введите код из SMS, который был отправлен на ваш номер
-          телефона
-        </p>
+        <Heading headingText="Введите код" />
+        <Paragraph
+          headingText="Пожалуйста, введите код из SMS, который был отправлен на ваш номер
+          телефона"
+        />
         <span>{`${Math.floor(timer / 60)}:${(timer % 60)
           .toString()
           .padStart(2, "0")}`}</span>
         <form onSubmit={handleSubmit}>
           <div className="code">
             {code.map((value, index) => (
-              <input
+              <Input
                 key={index}
                 id={`input-${index}`}
                 type="text"
@@ -71,12 +75,14 @@ export const PhoneSMS = () => {
             ))}
           </div>
           <div className="noCode">
-            <p>
-              Код не пришел? <a href="/forgotPassword-page">Отправить повторно</a>
-            </p>
+          <Paragraph 
+              headingText="Код не пришел?" 
+              linkText="Отправить повторно" 
+              linkHref="/forgotPassword-page" 
+            />
           </div>
         </form>
       </div>
-    </div>
+    </Container>
   );
 };

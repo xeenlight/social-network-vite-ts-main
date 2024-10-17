@@ -2,6 +2,10 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "../../components/UI/Button/Button";
 import "./ForgotPassword.scss";
+import { Container } from "../../components/UI/Container/Contaainer.style";
+import { Input } from "../../components/UI/Input/Input";
+import { Heading } from "../../components/Typography/Heading";
+import { Paragraph } from "../../components/Typography/Paragraph";
 
 export const ForgotPassword = () => {
   const [phoneNumber, setPhoneNumber] = useState("");
@@ -19,22 +23,23 @@ export const ForgotPassword = () => {
   };
 
   return (
-    <div className="container">
+    <Container>
       <div className="ForgotPassword">
-        <h1>Забыли пароль?</h1>
-        <p>Укажите свой номер телефона, чтобы получить код для сброса пароля.</p>
+        <Heading headingText="Забыли пароль?" />
+        <Paragraph headingText="Укажите свой номер телефона, чтобы получить код для сброса пароля." />
         <form onSubmit={handleSubmit}>
-          <input
+          <Input
             type="tel"
             placeholder="Номер телефона"
-            value={phoneNumber}
             onChange={handleInputChange}
           />
-          <Button type="submit" disabled={!phoneNumber} buttonText="Отправить"/>
-            
-
+          <Button
+            type="submit"
+            isPrimary={phoneNumber}
+            buttonText="Отправить"
+          />
         </form>
       </div>
-    </div>
+    </Container>
   );
 };
