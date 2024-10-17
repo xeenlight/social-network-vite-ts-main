@@ -6,6 +6,7 @@ import { Container } from "../../components/UI/Container/Contaainer.style";
 import { Heading } from "../../components/Typography/Heading";
 import { Paragraph } from "../../components/Typography/Paragraph";
 import { Input } from "../../components/UI/Input/Input";
+import { StyledRepeatPassword } from "./RepeatPassword.style";
 
 
 export const RepeatPassword = () => {
@@ -43,7 +44,7 @@ export const RepeatPassword = () => {
 
   return (
     <Container>
-      <div className="RepeatPassword">
+      <StyledRepeatPassword>
         <Heading headingText="Придумайте пароль" />
         <Paragraph
           headingText="Введите новый пароль для вашей учетной записи. Пароль должен содержать не менее 8 символов, включая заглавные и строчные буквы, цифры и специальные символы."
@@ -64,10 +65,10 @@ export const RepeatPassword = () => {
           <Button
             type="submit"
             isPrimary={!isButtonDisabled}
-            buttonText="Восстановить парол"
+            buttonText="Восстановить пароль"
           />
         </form>
-      </div>
+        </StyledRepeatPassword>
     </Container>
   );
 };

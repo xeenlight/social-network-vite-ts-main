@@ -6,6 +6,7 @@ import { Container } from "../../components/UI/Container/Contaainer.style";
 import { Input } from "../../components/UI/Input/Input";
 import { Heading } from "../../components/Typography/Heading";
 import { Paragraph } from "../../components/Typography/Paragraph";
+import { StyledForgotPassword } from "./ForgotPassword.style";
 
 export const ForgotPassword = () => {
   const [phoneNumber, setPhoneNumber] = useState("");
@@ -24,7 +25,7 @@ export const ForgotPassword = () => {
 
   return (
     <Container>
-      <div className="ForgotPassword">
+      <StyledForgotPassword>
         <Heading headingText="Забыли пароль?" />
         <Paragraph headingText="Укажите свой номер телефона, чтобы получить код для сброса пароля." />
         <form onSubmit={handleSubmit}>
@@ -39,7 +40,7 @@ export const ForgotPassword = () => {
             buttonText="Отправить"
           />
         </form>
-      </div>
+        </StyledForgotPassword>
     </Container>
   );
 };

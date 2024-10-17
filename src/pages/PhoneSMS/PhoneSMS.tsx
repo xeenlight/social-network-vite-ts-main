@@ -5,6 +5,7 @@ import { Container } from "../../components/UI/Container/Contaainer.style";
 import { Heading } from "../../components/Typography/Heading";
 import { Paragraph } from "../../components/Typography/Paragraph";
 import { Input } from "../../components/UI/Input/Input";
+import { StyledPhoneSMS } from "./PhoneSMS.style";
 
 export const PhoneSMS = () => {
   const [code, setCode] = useState(["", "", "", ""]);
@@ -51,7 +52,7 @@ export const PhoneSMS = () => {
 
   return (
     <Container>
-      <div className="PhoneSMS">
+      <StyledPhoneSMS>
         <Heading headingText="Введите код" />
         <Paragraph
           headingText="Пожалуйста, введите код из SMS, который был отправлен на ваш номер
@@ -82,7 +83,7 @@ export const PhoneSMS = () => {
             />
           </div>
         </form>
-      </div>
+      </StyledPhoneSMS>
     </Container>
   );
 };
