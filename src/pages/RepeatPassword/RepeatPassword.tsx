@@ -1,73 +1,86 @@
-import { useState } from "react";
-import { useNavigate } from "react-router-dom"; 
 import { Button } from "../../components/UI/Button/Button";
 import { Container } from "../../components/UI/Container/Contaainer.style";
 import { Heading } from "../../components/Typography/Heading";
 import { Paragraph } from "../../components/Typography/Paragraph";
 import { Input } from "../../components/UI/Input/Input";
 import { StyledRepeatPassword } from "./RepeatPassword.style";
+import { Controller, SubmitHandler, useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as yup from "yup";
+import { useNavigate } from "react-router-dom"; 
 
+interface IPasswordForm {
+  userPassword: string;
+  userPasswordRepeat: string;
+}
+
+const PasswordFormScheme = yup.object({
+  userPassword: yup
+    .string()
+    .required("Обязательное поле")
+    .min(8, "Пароль должен содержать не менее 8 символов"),
+  userPasswordRepeat: yup
+    .string()
+    .required("Обязательное поле")
+    .oneOf([yup.ref('userPassword')], "Пароли не совпадают"),
+});
 
 export const RepeatPassword = () => {
-  const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
-  const [isButtonDisabled, setIsButtonDisabled] = useState(true);
   const navigate = useNavigate(); 
+  const {
+    control,
+    handleSubmit,
+    formState: { errors, isValid },
+  } = useForm<IPasswordForm>({
+    resolver: yupResolver(PasswordFormScheme),
+    mode: "onChange",
+  });
 
-  const handlePasswordChange = (event) => {
-    const newPassword = event.target.value;
-    setPassword(newPassword);
-    validatePasswords(newPassword, confirmPassword);
-  };
-
-  const handleConfirmPasswordChange = (event) => {
-    const newConfirmPassword = event.target.value;
-    setConfirmPassword(newConfirmPassword);
-    validatePasswords(password, newConfirmPassword);
-  };
-
-  const validatePasswords = (password, confirmPassword) => {
-    if (password.length >= 8 && password === confirmPassword) {
-      setIsButtonDisabled(false);
-    } else {
-      setIsButtonDisabled(true);
-    }
-  };
-
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    if (!isButtonDisabled) {
-      navigate("/");
-    }
+  const onLoginSubmit: SubmitHandler<IPasswordForm> = (data) => {
+    console.log(data);
+    // Здесь добавьте логику для сохранения нового пароля
+    navigate("/");
   };
 
   return (
     <Container>
       <StyledRepeatPassword>
         <Heading headingText="Придумайте пароль" />
-        <Paragraph
-          headingText="Введите новый пароль для вашей учетной записи. Пароль должен содержать не менее 8 символов, включая заглавные и строчные буквы, цифры и специальные символы."
-        />
-        <form onSubmit={handleSubmit}>
-          <Input
-            type="password"
-            placeholder="Введите новый пароль"
-            value={password}
-            onChange={handlePasswordChange}
+        <Paragraph headingText="Введите новый пароль для вашей учетной записи." />
+        <form onSubmit={handleSubmit(onLoginSubmit)}>
+          <Controller
+            name="userPassword"
+            control={control}
+            render={({ field }) => (
+              <Input
+                type="password"
+                placeholder="Введите новый пароль"
+                errorText={errors.userPassword?.message}
+                isError={!!errors.userPassword}
+                {...field}
+              />
+            )}
           />
-          <Input
-            type="password"
-            placeholder="Повторите пароль"
-            value={confirmPassword}
-            onChange={handleConfirmPasswordChange}
+          <Controller
+            name="userPasswordRepeat"
+            control={control}
+            render={({ field }) => (
+              <Input
+                type="password"
+                placeholder="Повторите пароль"
+                errorText={errors.userPasswordRepeat?.message}
+                isError={!!errors.userPasswordRepeat}
+                {...field}
+              />
+            )}
           />
-          <Button
-            type="submit"
-            isPrimary={!isButtonDisabled}
-            buttonText="Восстановить пароль"
+          <Button 
+            type="submit" 
+            isPrimary={isValid} 
+            buttonText="Восстановить пароль" 
           />
         </form>
-        </StyledRepeatPassword>
+      </StyledRepeatPassword>
     </Container>
   );
 };

@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, KeyboardEvent } from "react";
 import { useNavigate } from "react-router-dom";
 import { Container } from "../../components/UI/Container/Contaainer.style";
 import { Heading } from "../../components/Typography/Heading";
@@ -20,7 +20,7 @@ export const PhoneSMS = () => {
     }
   }, [timer]);
 
-  const handleInputChange = (value, index) => {
+  const handleInputChange = (value: string, index: number) => {
     if (/^\d$/.test(value) || value === "") {
       const newCode = [...code];
       newCode[index] = value;
@@ -38,13 +38,13 @@ export const PhoneSMS = () => {
     }
   };
 
-  const handleKeyUp = (e, index) => {
+  const handleKeyUp = (e: KeyboardEvent<HTMLInputElement>, index: number) => {
     if (e.key === "Backspace" && index > 0 && code[index] === "") {
       document.getElementById(`input-${index - 1}`).focus();
     }
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = (event: { preventDefault: () => void; }) => {
     event.preventDefault();
     // Здесь можно добавить логику для проверки правильности кода
   };
@@ -68,7 +68,6 @@ export const PhoneSMS = () => {
                 id={`input-${index}`}
                 type="text"
                 value={value}
-                maxLength="1"
                 onChange={(e) => handleInputChange(e.target.value, index)}
                 onKeyUp={(e) => handleKeyUp(e, index)}
               />

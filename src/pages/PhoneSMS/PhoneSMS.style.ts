@@ -18,13 +18,7 @@ export const StyledPhoneSMS = styled.div`
     margin-bottom: 16px;
   }
 
-  p {
-    font-weight: 400;
-    line-height: 24.2px;
-    text-align: center;
-    margin-bottom: 48px;
-    color: #a0a0a0;
-  }
+
   span {
     display: block;
     font-size: 40px;

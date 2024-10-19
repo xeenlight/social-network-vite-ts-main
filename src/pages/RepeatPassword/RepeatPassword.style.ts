@@ -19,15 +19,6 @@ export const StyledRepeatPassword = styled.div`
     margin-bottom: 16px;
   }
 
-  p {
-    font-weight: 400;
-    line-height: 24.2px;
-    text-align: center;
-    margin-bottom: 56px;
-    color: #a0a0a0;
-  }
-
-
 
 @media (max-width: 530px) {
 
