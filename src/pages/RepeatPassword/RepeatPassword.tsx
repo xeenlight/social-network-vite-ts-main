@@ -57,8 +57,6 @@ export const RepeatPassword = () => {
     if (userIndex !== -1) {
       storedData[userIndex].userPassword = data.userPassword;
       localStorage.setItem("users", JSON.stringify(storedData));
-
-      alert("Пароль успешно обновлён!");
       navigate("/");
     } else {
       alert("Пользователь не найден. Попробуйте снова.");

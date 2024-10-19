@@ -17,8 +17,13 @@ const PasswordFormScheme = yup.object({
   userEmail: yup
     .string()
     .required("Обязательное поле")
-    .email("Введите корректно свою почту"),
+    .email("Введите корректно свою почту")
+    .test('unique', 'Пользователь с таким email не найден', function (value) {
+      const storedData = JSON.parse(localStorage.getItem("users") || "[]");
+      return storedData.some((user: { userEmail: string; }) => user.userEmail === value);
+    }),
 });
+
 
 export const ForgotPassword = () => {
   const navigate = useNavigate();
@@ -40,9 +45,7 @@ export const ForgotPassword = () => {
     
     if (user) {
       navigate('/phoneSMS-page', { state: { email: user.userEmail } }); // Передаем email в state
-    } else {
-      alert("Email не найден. Пожалуйста, проверьте и попробуйте снова.");
-    }
+    } 
   };
   
 
