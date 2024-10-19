@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import "./PhoneSMS.scss";
 import { useNavigate } from "react-router-dom";
 import { Container } from "../../components/UI/Container/Contaainer.style";
 import { Heading } from "../../components/Typography/Heading";

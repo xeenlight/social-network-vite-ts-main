@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom"; 
-import "./RepeatPassword.scss";
 import { Button } from "../../components/UI/Button/Button";
 import { Container } from "../../components/UI/Container/Contaainer.style";
 import { Heading } from "../../components/Typography/Heading";

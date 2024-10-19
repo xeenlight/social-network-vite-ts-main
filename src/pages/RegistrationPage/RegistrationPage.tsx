@@ -1,5 +1,4 @@
-import React, { useState } from "react";
-import "./RegistrationPage.scss";
+import { useState } from "react";
 import { Heading } from "../../components/Typography/Heading";
 import { Button } from "../../components/UI/Button/Button";
 import { Container } from "../../components/UI/Container/Contaainer.style";

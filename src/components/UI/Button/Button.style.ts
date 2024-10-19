@@ -1,6 +1,6 @@
 import styled, { css } from "styled-components";
 interface StyledButtonProps {
-  isPrimary?: boolean;
+  $isPrimary?: boolean;
 }
 
 export const SButton = styled.button<StyledButtonProps>`
@@ -22,7 +22,7 @@ export const SButton = styled.button<StyledButtonProps>`
     background-color: ${(props) => props.theme.colors.disabledBgc};
   }
   ${(props) =>
-    props.isPrimary
+    props.$isPrimary
       ? css`
           background-color: ${(props) => props.theme.colors.primeColor};
           color: white;
