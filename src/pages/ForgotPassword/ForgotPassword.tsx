@@ -13,11 +13,14 @@ interface IPasswordForm {
   userEmail: string; 
 }
 
+// Sample list of registered emails (this could be replaced with an API call)
+const registeredEmails = ["user1@example.com", "user2@example.com"];
+
 const PasswordFormScheme = yup.object({
   userEmail: yup
     .string()
     .required("Обязательное поле")
-    .email("Введите коректно свою почту")
+    .email("Введите корректно свою почту")
 });
 
 export const ForgotPassword = () => {
@@ -25,6 +28,7 @@ export const ForgotPassword = () => {
   const {
     control,
     handleSubmit,
+    setError,
     formState: { errors, isValid },
   } = useForm<IPasswordForm>({
     resolver: yupResolver(PasswordFormScheme),
@@ -34,6 +38,16 @@ export const ForgotPassword = () => {
   });
 
   const onPasswordSubmit: SubmitHandler<IPasswordForm> = (data) => {
+    // Check if the email is registered
+    if (!registeredEmails.includes(data.userEmail)) {
+      setError("userEmail", {
+        type: "manual",
+        message: "Этот Email не зарегистрирован",
+      });
+      return;
+    }
+    
+    // Proceed if the email is registered
     console.log(data);
     navigate('/phoneSMS-page');
   };
