@@ -7,7 +7,7 @@ import { StyledRepeatPassword } from "./RepeatPassword.style";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
-import { useNavigate } from "react-router-dom"; 
+import { useNavigate, useLocation } from "react-router-dom"; 
 
 interface IPasswordForm {
   userPassword: string;
@@ -26,7 +26,16 @@ const PasswordFormScheme = yup.object({
 });
 
 export const RepeatPassword = () => {
-  const navigate = useNavigate(); 
+  const navigate = useNavigate();
+  const location = useLocation();
+  const { email } = location.state || {};
+
+  if (!email) {
+    alert("Email не найден. Попробуйте снова.");
+    navigate("/"); 
+    return;
+  }
+
   const {
     control,
     handleSubmit,
@@ -34,12 +43,26 @@ export const RepeatPassword = () => {
   } = useForm<IPasswordForm>({
     resolver: yupResolver(PasswordFormScheme),
     mode: "onChange",
+    defaultValues: {
+      userPassword: "",
+      userPasswordRepeat: ""
+    },
   });
 
   const onLoginSubmit: SubmitHandler<IPasswordForm> = (data) => {
-    console.log(data);
-    // Здесь добавьте логику для сохранения нового пароля
-    navigate("/");
+    const storedData = JSON.parse(localStorage.getItem("users") || "[]");
+
+    const userIndex = storedData.findIndex((user: { userEmail: any; }) => user.userEmail === email);
+
+    if (userIndex !== -1) {
+      storedData[userIndex].userPassword = data.userPassword;
+      localStorage.setItem("users", JSON.stringify(storedData));
+
+      alert("Пароль успешно обновлён!");
+      navigate("/");
+    } else {
+      alert("Пользователь не найден. Попробуйте снова.");
+    }
   };
 
   return (
@@ -58,6 +81,7 @@ export const RepeatPassword = () => {
                 errorText={errors.userPassword?.message}
                 isError={!!errors.userPassword}
                 {...field}
+                value={field.value || ''} // Убедитесь, что значение всегда строка
               />
             )}
           />
@@ -71,6 +95,7 @@ export const RepeatPassword = () => {
                 errorText={errors.userPasswordRepeat?.message}
                 isError={!!errors.userPasswordRepeat}
                 {...field}
+                value={field.value || ''} // Убедитесь, что значение всегда строка
               />
             )}
           />

@@ -13,14 +13,11 @@ interface IPasswordForm {
   userEmail: string; 
 }
 
-// Sample list of registered emails (this could be replaced with an API call)
-const registeredEmails = ["user1@example.com", "user2@example.com"];
-
 const PasswordFormScheme = yup.object({
   userEmail: yup
     .string()
     .required("Обязательное поле")
-    .email("Введите корректно свою почту")
+    .email("Введите корректно свою почту"),
 });
 
 export const ForgotPassword = () => {
@@ -28,7 +25,6 @@ export const ForgotPassword = () => {
   const {
     control,
     handleSubmit,
-    setError,
     formState: { errors, isValid },
   } = useForm<IPasswordForm>({
     resolver: yupResolver(PasswordFormScheme),
@@ -38,25 +34,23 @@ export const ForgotPassword = () => {
   });
 
   const onPasswordSubmit: SubmitHandler<IPasswordForm> = (data) => {
-    // Check if the email is registered
-    if (!registeredEmails.includes(data.userEmail)) {
-      setError("userEmail", {
-        type: "manual",
-        message: "Этот Email не зарегистрирован",
-      });
-      return;
-    }
+    const storedData = JSON.parse(localStorage.getItem("users") || "[]");
     
-    // Proceed if the email is registered
-    console.log(data);
-    navigate('/phoneSMS-page');
+    const user = storedData.find((user: { userEmail: string; }) => user.userEmail === data.userEmail);
+    
+    if (user) {
+      navigate('/phoneSMS-page', { state: { email: user.userEmail } }); // Передаем email в state
+    } else {
+      alert("Email не найден. Пожалуйста, проверьте и попробуйте снова.");
+    }
   };
+  
 
   return (
     <Container>
       <StyledForgotPassword>
         <Heading headingText="Забыли пароль?" />
-        <Paragraph headingText="Укажите свой номер телефона, чтобы получить код для сброса пароля." />
+        <Paragraph headingText="Укажите свой Email, чтобы получить код для сброса пароля." />
         <form onSubmit={handleSubmit(onPasswordSubmit)} action="#">
           <Controller
             name="userEmail"

@@ -1,5 +1,5 @@
 import { useState, useEffect, KeyboardEvent } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { Container } from "../../components/UI/Container/Contaainer.style";
 import { Heading } from "../../components/Typography/Heading";
 import { Paragraph } from "../../components/Typography/Paragraph";
@@ -7,14 +7,23 @@ import { Input } from "../../components/UI/Input/Input";
 import { StyledPhoneSMS } from "./PhoneSMS.style";
 
 export const PhoneSMS = () => {
+  const navigate = useNavigate();
+  const location = useLocation();
+  const { email } = location.state || {};
+
+  if (!email) {
+    alert("Email не найден. Попробуйте снова.");
+    navigate("/");
+    return;
+  }
+
   const [code, setCode] = useState(["", "", "", ""]);
   const [timer, setTimer] = useState(60);
-  const navigate = useNavigate();
 
   useEffect(() => {
     if (timer > 0) {
       const countdown = setInterval(() => {
-        setTimer(timer - 1);
+        setTimer(prevTimer => prevTimer - 1);
       }, 1000);
       return () => clearInterval(countdown);
     }
@@ -26,14 +35,12 @@ export const PhoneSMS = () => {
       newCode[index] = value;
       setCode(newCode);
 
-      // Переход на следующее поле при вводе цифры
       if (value && index < 3) {
         document.getElementById(`input-${index + 1}`).focus();
       }
 
-      // Проверка, заполнены ли все инпуты
       if (newCode.every((digit) => digit !== "")) {
-        navigate("/repeatPassword-page");
+        navigate("/repeatPassword-page", { state: { email } }); // Передаем email на страницу сброса пароля
       }
     }
   };
@@ -54,12 +61,9 @@ export const PhoneSMS = () => {
       <StyledPhoneSMS>
         <Heading headingText="Введите код" />
         <Paragraph
-          headingText="Пожалуйста, введите код из SMS, который был отправлен на ваш номер
-          телефона"
+          headingText="Пожалуйста, введите код из SMS, который был отправлен на ваш номер телефона"
         />
-        <span>{`${Math.floor(timer / 60)}:${(timer % 60)
-          .toString()
-          .padStart(2, "0")}`}</span>
+        <span>{`${Math.floor(timer / 60)}:${(timer % 60).toString().padStart(2, "0")}`}</span>
         <form onSubmit={handleSubmit}>
           <div className="code">
             {code.map((value, index) => (
@@ -74,7 +78,7 @@ export const PhoneSMS = () => {
             ))}
           </div>
           <div className="noCode">
-          <Paragraph 
+            <Paragraph 
               headingText="Код не пришел?" 
               linkText="Отправить повторно" 
               linkHref="/forgotPassword-page" 
