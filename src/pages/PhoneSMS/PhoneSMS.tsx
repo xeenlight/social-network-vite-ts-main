@@ -74,6 +74,7 @@ export const PhoneSMS = () => {
                 value={value}
                 onChange={(e) => handleInputChange(e.target.value, index)}
                 onKeyUp={(e) => handleKeyUp(e, index)}
+                isError={false}
               />
             ))}
           </div>
