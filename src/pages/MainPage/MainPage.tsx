@@ -7,7 +7,7 @@ import { WhatsNew } from "../../components/UI/WhatsNew/WhatsNew";
 import "./MainPage.scss";
 import { Arrow } from "../../components/UI/Arrow/Arrow";
 import { HistoryItem } from "../../components/UI/HistoryItem/HistoryItem";
-import { StyledHistory } from "../../components/UI/History/History.style";
+import { History } from "../../components/UI/History/History";
 
 export const MainPage = () => {
   return (
@@ -172,66 +172,63 @@ export const MainPage = () => {
             placeholder={"Что у вас нового?"}
           />
 
-          <StyledHistory>
+          <History>
             <Arrow />
-
-            <div className="History__wrapper">
-              <HistoryItem
-                isAddHistory={true}
-                title="История"
-                imgSrc="./img/users/andrey-kashirskiy.jpeg"
-                imgAlt="Add History"
-              />
-              <HistoryItem
-                isAddHistory={false}
-                posterSrc="./img/history/poster-1.jpeg"
-                posterAlt="History Poster"
-                ownerImgSrc="./img/users/aleksandr-maykov.jpeg"
-                ownerImgAlt="History Owner"
-                ownerName="Александр Майков"
-              />
-              <HistoryItem
-                isAddHistory={false}
-                posterSrc="./img/history/poster-2.jpeg"
-                posterAlt="History Poster"
-                ownerImgSrc="/img/users/darya-gertner.jpeg"
-                ownerImgAlt="History Owner"
-                ownerName="Дарья Гертнер"
-              />
-              <HistoryItem
-                isAddHistory={false}
-                posterSrc="./img/history/poster-3.jpeg"
-                posterAlt="History Poster"
-                ownerImgSrc="./img/users/denis-frolov.jpeg"
-                ownerImgAlt="History Owner"
-                ownerName="Денис Фролов"
-              />
-              <HistoryItem
-                isAddHistory={false}
-                posterSrc="./img/history/poster-4.jpeg"
-                posterAlt="History Poster"
-                ownerImgSrc="./img/users/katarina-fisher.jpeg"
-                ownerImgAlt="History Owner"
-                ownerName="Катарина Фишер"
-              />
-              <HistoryItem
-                isAddHistory={false}
-                posterSrc="./img/history/poster-1.jpeg"
-                posterAlt="History Poster"
-                ownerImgSrc="./img/users/aleksandr-maykov.jpeg"
-                ownerImgAlt="History Owner"
-                ownerName="Александр Майков"
-              />
-              <HistoryItem
-                isAddHistory={false}
-                posterSrc="./img/history/poster-2.jpeg"
-                posterAlt="History Poster"
-                ownerImgSrc="/img/users/darya-gertner.jpeg"
-                ownerImgAlt="History Owner"
-                ownerName="Дарья Гертнер"
-              />
-            </div>
-          </StyledHistory>
+            <HistoryItem
+              isAddHistory={true}
+              title="История"
+              imgSrc="./img/users/andrey-kashirskiy.jpeg"
+              imgAlt="Add History"
+            />
+            <HistoryItem
+              isAddHistory={false}
+              posterSrc="./img/history/poster-1.jpeg"
+              posterAlt="History Poster"
+              ownerImgSrc="./img/users/aleksandr-maykov.jpeg"
+              ownerImgAlt="History Owner"
+              ownerName="Александр Майков"
+            />
+            <HistoryItem
+              isAddHistory={false}
+              posterSrc="./img/history/poster-2.jpeg"
+              posterAlt="History Poster"
+              ownerImgSrc="/img/users/darya-gertner.jpeg"
+              ownerImgAlt="History Owner"
+              ownerName="Дарья Гертнер"
+            />
+            <HistoryItem
+              isAddHistory={false}
+              posterSrc="./img/history/poster-3.jpeg"
+              posterAlt="History Poster"
+              ownerImgSrc="./img/users/denis-frolov.jpeg"
+              ownerImgAlt="History Owner"
+              ownerName="Денис Фролов"
+            />
+            <HistoryItem
+              isAddHistory={false}
+              posterSrc="./img/history/poster-4.jpeg"
+              posterAlt="History Poster"
+              ownerImgSrc="./img/users/katarina-fisher.jpeg"
+              ownerImgAlt="History Owner"
+              ownerName="Катарина Фишер"
+            />
+            <HistoryItem
+              isAddHistory={false}
+              posterSrc="./img/history/poster-1.jpeg"
+              posterAlt="History Poster"
+              ownerImgSrc="./img/users/aleksandr-maykov.jpeg"
+              ownerImgAlt="History Owner"
+              ownerName="Александр Майков"
+            />
+            <HistoryItem
+              isAddHistory={false}
+              posterSrc="./img/history/poster-2.jpeg"
+              posterAlt="History Poster"
+              ownerImgSrc="/img/users/darya-gertner.jpeg"
+              ownerImgAlt="History Owner"
+              ownerName="Дарья Гертнер"
+            />
+          </History>
 
           <div className="Post _liked _marked">
             <div className="UserElem">
