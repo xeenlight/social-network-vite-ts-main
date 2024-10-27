@@ -301,7 +301,7 @@ export const StyledContainerMain = styled.div`
     cursor: pointer;
     position: absolute;
     top: 50%;
-    right: -20px;
+    right: 0px;
     transform: translateY(-50%);
     z-index: 2;
 

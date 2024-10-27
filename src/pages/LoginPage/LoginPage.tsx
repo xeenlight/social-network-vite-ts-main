@@ -9,8 +9,21 @@ import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { RootState } from "../../Store/Store";
+import { changeUser } from "../../Store/userSlice";
 
 import * as yup from "yup";
+
+const mockeUser = {
+  mail: "qwer@gmai.com",
+  phone_number: "+998",
+  user_id: 1,
+  name: "Владимир",
+  reg_data: new Date().toISOString(), 
+  city: "Ташкент",
+};
+
 
 interface ILoginForm {
   userEmail: string;
@@ -18,7 +31,10 @@ interface ILoginForm {
 }
 
 const loginFormScheme = yup.object({
-  userEmail: yup.string().required("Обязательное поле").email("Введите коректно свою почту"),
+  userEmail: yup
+    .string()
+    .required("Обязательное поле")
+    .email("Введите коректно свою почту"),
   userPassword: yup
     .string()
     .required("Обязательное поле")
@@ -26,13 +42,19 @@ const loginFormScheme = yup.object({
 });
 
 export const LoginPage = () => {
+  const user = useSelector((state: RootState) => state.userSlice.user);
+  console.log(user);
+  
+  const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  
   const [loginError, setLoginError] = useState(""); // State for managing login error
   const {
     control,
     handleSubmit,
     formState: { errors, isValid },
-    setError, // To set error on specific fields
+    setError,
   } = useForm<ILoginForm>({
     resolver: yupResolver(loginFormScheme),
     defaultValues: {
@@ -42,19 +64,30 @@ export const LoginPage = () => {
   });
 
   const onLoginSubmit: SubmitHandler<ILoginForm> = (data) => {
-    const storedData = JSON.parse(localStorage.getItem("users") || "[]");
-  
-    // Проверяем, существует ли пользователь с таким email и паролем
-    const user = storedData.find((user: { userEmail: string; userPassword: string; }) => user.userEmail === data.userEmail && user.userPassword === data.userPassword);
-  
-    if (user) {
-      navigate("/profile-page"); // Перенаправление на страницу профиля при успешном входе
-    } else {
-      setError("userPassword", { type: "manual", message: "Неправильный логин или пароль" });
-      setLoginError("Неправильный логин или пароль");
-    }
+    dispatch(changeUser(mockeUser));
+    navigate("/profile-page");
+
+    // const storedData = JSON.parse(localStorage.getItem("users") || "[]");
+
+    // const user = storedData.find(
+    //   (user: { userEmail: string; userPassword: string }) =>
+    //     user.userEmail === data.userEmail &&
+    //     user.userPassword === data.userPassword
+    // );
+
+    // if (user) {
+    //   navigate("/profile-page");
+    // } else {
+    //   setError("userPassword", {
+    //     type: "manual",
+    //     message: "Неправильный логин или пароль",
+    //   });
+    //   setLoginError("Неправильный логин или пароль");
+    // }
   };
-  
+
+
+
 
   return (
     <Container>

@@ -20,8 +20,12 @@ import { FriendsBlock } from "../../components/UI/FriendsBlock/FriendsBlock";
 import { Friends } from "../../components/UI/Friends/Friends";
 import { UserPosts } from "../../components/UI/UserPosts/UserPosts";
 import { ContainerProfile } from "../../components/UI/ContainerProfile/ContainerProfile";
+import { useSelector } from "react-redux";
+import { RootState } from "../../Store/Store";
 
 export const ProfilePage = () => {
+  const user = useSelector((state: RootState) => state.userSlice.user);
+  console.log(user);
   return (
     <Container>
       <Header />
@@ -229,7 +233,7 @@ export const ProfilePage = () => {
               date="0 марта"
             />
 
-            <More />
+            <More/>
           </PostContainer>
 
           <PostContainer>
