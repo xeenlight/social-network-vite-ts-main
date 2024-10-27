@@ -3,12 +3,14 @@ import styled from "styled-components";
 export const StyledPostUserElem = styled.div`
   cursor: default;
   padding: 0;
-  margin-bottom: 30px;
+  
 
   .PostUserElem {
-    font-size: calc(0.8vw + 4px);
+    font-size: 16px;
     display: flex; 
     align-items: center;
+    margin-bottom: 30px;
+    
   }
 
   img {
@@ -20,5 +22,8 @@ export const StyledPostUserElem = styled.div`
 
   .user__description {
     margin-left: 10px; 
+  }
+  .secondary__text {
+    margin-top: 5px; 
   }
 `;

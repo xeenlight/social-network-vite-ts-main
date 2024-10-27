@@ -9,7 +9,12 @@ const StyledText = styled.p`
   color: #303030;
   font-weight: 400;
   font-size: calc(0.8vw + 4px);
-  margin-bottom: 10px;
+  margin-bottom: 20px;
+  @media (max-width: 1480px) {
+
+        font-size: 16px;
+  
+}
 `;
 export const Text = ({ headingText, linkHref, linkText }: Text) => {
   return (

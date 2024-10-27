@@ -4,7 +4,6 @@ import { NavBarItem } from "../../components/UI/NavBarItem/NavBarItem";
 import { List } from "../../components/UI/List/List";
 import { UserElem } from "../../components/UI/UserElem/UserElem";
 import { WhatsNew } from "../../components/UI/WhatsNew/WhatsNew";
-import "./MainPage.scss";
 import { Arrow } from "../../components/UI/Arrow/Arrow";
 import { HistoryItem } from "../../components/UI/HistoryItem/HistoryItem";
 import { History } from "../../components/UI/History/History";
@@ -17,14 +16,16 @@ import { CommentBlock } from "../../components/UI/CommentBlock/CommentBlock";
 import { More } from "../../components/UI/More/More";
 import { PostContainer } from "../../components/UI/PostContainer/PostContainer";
 import { PostRepost } from "../../components/UI/PostRepost/PostRepost";
-import { MainPageContainer } from "../../components/UI/MainPageContainer/MainPageContainer";
+import { Music } from "../../components/UI/Music/Music";
+import { ContainerMain } from "../../components/UI/ContainerMain/ContainerMain";
+
 
 export const MainPage = () => {
   return (
     <Container>
       <Header />
+      <ContainerMain>
 
-      <MainPageContainer>
         <aside className="LeftSide">
           <nav className="Navbar">
             <ul className="navbar__list">
@@ -176,6 +177,7 @@ export const MainPage = () => {
             />
           </List>
         </aside>
+
         <main className="Main">
           <WhatsNew
             imgSrc="./img/users/arina-volkova.jpeg"
@@ -311,7 +313,7 @@ export const MainPage = () => {
           </PostContainer>
         </main>
         <aside className="RightSide">
-          <List title={"Близкие друзья"} count={0}>
+          <List title="Близкие друзья" count={0}>
             <UserElem
               imgSrc="./img/users/aleksandr-maykov.jpeg"
               mainText="Александр Майков"
@@ -337,38 +339,38 @@ export const MainPage = () => {
               isOnline={true}
             />
           </List>
-          <List title={"Вы недавно слушали"} count={0}>
-            <UserElem
+          <List title="Вы недавно слушали" count={0}>
+            <Music
               imgSrc="./img/music/album-1.png"
               mainText="Pieces"
               secondaryText="Andrew Belle"
               isActive={true}
             />
-            <UserElem
+            <Music
               imgSrc="./img/music/album-2.png"
               mainText="In the Wind"
               secondaryText="On-The-Go"
               isActive={false}
             />
-            <UserElem
+            <Music
               imgSrc="./img/music/album-3.png"
               mainText="On you own"
               secondaryText="Meltt"
               isActive={true}
             />
-            <UserElem
+            <Music
               imgSrc="./img/music/album-4.png"
               mainText="Infinity"
               secondaryText="James Young"
               isActive={false}
             />
-            <UserElem
+            <Music
               imgSrc="./img/music/album-5.png"
               mainText="Let me follow"
               secondaryText="Son Lux"
               isActive={true}
             />
-            <UserElem
+            <Music
               imgSrc="./img/music/album-6.png"
               mainText="Youth"
               secondaryText="Glass Animals"
@@ -376,7 +378,8 @@ export const MainPage = () => {
             />
           </List>
         </aside>
-      </MainPageContainer>
+
+      </ContainerMain>
     </Container>
   );
 };
