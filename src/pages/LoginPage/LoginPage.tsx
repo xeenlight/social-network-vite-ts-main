@@ -19,7 +19,7 @@ const mockeUser = {
   mail: "qwer@gmai.com",
   phone_number: "+998",
   user_id: 1,
-  name: "Владимир",
+  name: "1",
   reg_data: new Date().toISOString(), 
   city: "Ташкент",
 };

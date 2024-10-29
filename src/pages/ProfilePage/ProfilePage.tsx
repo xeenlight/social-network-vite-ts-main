@@ -185,7 +185,7 @@ export const ProfilePage = () => {
         <ProfileUser
           userImg="./img/users/me.png"
           userAlt="userPhpto"
-          userName="Владимир"
+          userName={user?.name || "Имя пользователя"}
           countFriends={0}
           countSubscribers={0}
           countSubscriptions={0}

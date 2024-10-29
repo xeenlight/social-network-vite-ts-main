@@ -10,7 +10,7 @@ export interface IUser {
 }
 
 export interface IUserStateProps {
-  user: null | IUser; // Здесь будет храниться либо пустое значение, либо значения из IUser
+  user: null | IUser; 
 }
 
 export const initialState: IUserStateProps = {
