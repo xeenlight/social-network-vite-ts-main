@@ -31,14 +31,13 @@ const loginFormScheme = yup.object({
 
 export const LoginPage = () => {
   const navigate = useNavigate();
-  const [loginUser, { data: newData }] = useLoginUserMutation();
-
+  const [loginUser, { data: newData, isSuccess }] = useLoginUserMutation();
 
   useEffect(() => {
-    if (newData?.user_id) {
-      console.log(newData);
+    if (isSuccess && newData?.user_id) {
+      navigate("/profile-page");
     }
-  }, [newData, navigate]);
+  }, [isSuccess, newData, navigate]);
 
   const [loginError] = useState("");
   const {
@@ -69,7 +68,7 @@ export const LoginPage = () => {
               <Input
                 type="email"
                 placeholder="Ваша почта"
-                errorText={errors.useremail?.message || loginError} // Display error message
+                errorText={errors.useremail?.message || loginError}
                 isError={!!errors.useremail || !!loginError}
                 {...field}
               />
