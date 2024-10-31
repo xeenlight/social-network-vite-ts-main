@@ -8,86 +8,54 @@ import { StyledLoginPage } from "./LoginPage.style";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useNavigate } from "react-router-dom";
-import { useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { RootState } from "../../Store/Store";
-import { changeUser } from "../../Store/userSlice";
+import { useState, useEffect } from "react";
 
 import * as yup from "yup";
-
-const mockeUser = {
-  mail: "qwer@gmai.com",
-  phone_number: "+998",
-  user_id: 1,
-  name: "1",
-  reg_data: new Date().toISOString(), 
-  city: "Ташкент",
-};
-
+import { useLoginUserMutation } from "../../Store/Api/authApi";
 
 interface ILoginForm {
-  userEmail: string;
-  userPassword: string;
+  useremail: string;
+  userpassword: string;
 }
 
 const loginFormScheme = yup.object({
-  userEmail: yup
+  useremail: yup
     .string()
     .required("Обязательное поле")
     .email("Введите коректно свою почту"),
-  userPassword: yup
+  userpassword: yup
     .string()
     .required("Обязательное поле")
-    .min(8, "Пароль должен содержать более 8 цифр"),
+    .min(6, "Пароль должен содержать более 6 цифр"),
 });
 
 export const LoginPage = () => {
-  const user = useSelector((state: RootState) => state.userSlice.user);
-  console.log(user);
-  
-  const dispatch = useDispatch();
   const navigate = useNavigate();
+  const [loginUser, { data: newData }] = useLoginUserMutation();
 
-  
-  const [loginError, setLoginError] = useState(""); // State for managing login error
+
+  useEffect(() => {
+    if (newData?.user_id) {
+      console.log(newData);
+    }
+  }, [newData, navigate]);
+
+  const [loginError] = useState("");
   const {
     control,
     handleSubmit,
     formState: { errors, isValid },
-    setError,
   } = useForm<ILoginForm>({
     resolver: yupResolver(loginFormScheme),
     defaultValues: {
-      userEmail: "",
-      userPassword: "",
+      useremail: "",
+      userpassword: "",
     },
   });
 
   const onLoginSubmit: SubmitHandler<ILoginForm> = (data) => {
-    dispatch(changeUser(mockeUser));
-    navigate("/profile-page");
-
-    // const storedData = JSON.parse(localStorage.getItem("users") || "[]");
-
-    // const user = storedData.find(
-    //   (user: { userEmail: string; userPassword: string }) =>
-    //     user.userEmail === data.userEmail &&
-    //     user.userPassword === data.userPassword
-    // );
-
-    // if (user) {
-    //   navigate("/profile-page");
-    // } else {
-    //   setError("userPassword", {
-    //     type: "manual",
-    //     message: "Неправильный логин или пароль",
-    //   });
-    //   setLoginError("Неправильный логин или пароль");
-    // }
+    loginUser({ email: data.useremail, password: data.userpassword });
   };
-
-
-
 
   return (
     <Container>
@@ -95,28 +63,28 @@ export const LoginPage = () => {
         <Heading headingText="Авторизация" />
         <form onSubmit={handleSubmit(onLoginSubmit)}>
           <Controller
-            name="userEmail"
+            name="useremail"
             control={control}
             render={({ field }) => (
               <Input
                 type="email"
                 placeholder="Ваша почта"
-                errorText={errors.userEmail?.message || loginError} // Display error message
-                isError={!!errors.userEmail || !!loginError}
+                errorText={errors.useremail?.message || loginError} // Display error message
+                isError={!!errors.useremail || !!loginError}
                 {...field}
               />
             )}
           />
 
           <Controller
-            name="userPassword"
+            name="userpassword"
             control={control}
             render={({ field }) => (
               <Input
                 type="password"
                 placeholder="Пароль"
-                errorText={errors.userPassword?.message}
-                isError={!!errors.userPassword}
+                errorText={errors.userpassword?.message}
+                isError={!!errors.userpassword}
                 {...field}
               />
             )}

@@ -3,47 +3,43 @@ import { Button } from "../../components/UI/Button/Button";
 import { Container } from "../../components/UI/Container/Contaainer.style";
 import { Input } from "../../components/UI/Input/Input";
 import { StyledRegistrationPage } from "./RegistrationPage.style";
-import { useNavigate } from "react-router-dom";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
+import { useRegisterUserMutation } from "../../Store/Api/authApi";
 
 interface IRegistrationForm {
-  userName: string;
-  userSurname: string;
-  userPhone: string;
-  userEmail: string;
-  userPassword: string;
+  username: string;
+  userphone: string;
+  useremail: string;
+  userpassword: string;
+  usercity: string;
 }
 
 const RegistrationFormScheme = yup.object({
-  userName: yup
+  username: yup
     .string()
     .required("Обязательное поле")
     .min(1, "Введите своё Имя"),
-  userSurname: yup
-    .string()
-    .required("Обязательное поле")
-    .min(1, "Введите свою Фамилию"),
-  userPhone: yup
+  userphone: yup
     .string()
     .required("Обязательное поле")
     .matches(/^\d{10}$/, "Введите корректный номер телефона"),
-  userEmail: yup
+  useremail: yup
     .string()
     .required("Обязательное поле")
-    .email("Введите коректно свою почту")
-    .test('unique', 'Пользователь с таким email уже существует', function (value) {
-      const storedData = JSON.parse(localStorage.getItem("users") || "[]");
-      return !storedData.find((user: { userEmail: string; }) => user.userEmail === value);
-    }),
-  userPassword: yup
+    .email("Введите коректно свою почту"),
+  userpassword: yup
     .string()
     .required("Обязательное поле")
-    .min(8, "Пароль должен содержать не менее 8 символов"),
+    .min(6, "Пароль должен содержать не менее 6 символов"),
+    usercity: yup
+    .string()
+    .required("Обязательное поле")
+    .min(1, "Введите ваш город"),
 });
 export const RegistrationPage = () => {
-  const navigate = useNavigate();
+  const [registrationUser, { data: newData }] = useRegisterUserMutation();
   const {
     control,
     handleSubmit,
@@ -51,95 +47,89 @@ export const RegistrationPage = () => {
   } = useForm<IRegistrationForm>({
     resolver: yupResolver(RegistrationFormScheme),
     defaultValues: {
-      userName: "",
-      userSurname: "",
-      userPhone: "",
-      userEmail: "",
-      userPassword: "",
+      username: "",
+      userphone: "",
+      useremail: "",
+      userpassword: "",
+      usercity: "",
     },
   });
 
-  const onPasswordSubmit: SubmitHandler<IRegistrationForm> = (data) => {
-    // Добавляем нового пользователя
-    const storedData = JSON.parse(localStorage.getItem("users") || "[]");
-    storedData.push(data);
-    localStorage.setItem("users", JSON.stringify(storedData));
-    navigate("/"); // Перенаправление на страницу входа после регистрации
+  const onRegisterSubmit: SubmitHandler<IRegistrationForm> = (data) => {
+    registrationUser({name:data.username, email:data.useremail, phone_number:data.userphone, password:data.userpassword, user_city:data.usercity})
   };
-  
-  
 
+  
   return (
     <Container>
       <StyledRegistrationPage>
         <Heading headingText="Зарегистрироваться" />
-        <form onSubmit={handleSubmit(onPasswordSubmit)} action="#">
+        <form onSubmit={handleSubmit(onRegisterSubmit)}>
           <Controller
-            name="userName"
+            name="username"
             control={control}
             render={({ field }) => (
               <Input
                 type="text"
                 placeholder="Ваше Имя"
-                errorText={errors.userName?.message}
-                isError={!!errors.userName}
+                errorText={errors.username?.message}
+                isError={!!errors.username}
                 {...field}
               />
             )}
           />
           <Controller
-            name="userSurname"
-            control={control}
-            render={({ field }) => (
-              <Input
-                type="text"
-                placeholder="Ваша Фамилия"
-                errorText={errors.userSurname?.message}
-                isError={!!errors.userSurname}
-                {...field}
-              />
-            )}
-          />
-          <Controller
-            name="userPhone"
+            name="userphone"
             control={control}
             render={({ field }) => (
               <Input
                 type="tel"
                 placeholder="Номер телефона"
-                errorText={errors.userPhone?.message}
-                isError={!!errors.userPhone}
+                errorText={errors.userphone?.message}
+                isError={!!errors.userphone}
                 {...field}
               />
             )}
           />
           <Controller
-            name="userEmail"
+            name="useremail"
             control={control}
             render={({ field }) => (
               <Input
                 type="email"
                 placeholder="Ваша почта"
-                errorText={errors.userEmail?.message}
-                isError={!!errors.userEmail}
+                errorText={errors.useremail?.message}
+                isError={!!errors.useremail}
                 {...field}
               />
             )}
           />
           <Controller
-            name="userPassword"
+            name="userpassword"
             control={control}
             render={({ field }) => (
               <Input
                 type="password"
                 placeholder="Пароль"
-                errorText={errors.userPassword?.message}
-                isError={!!errors.userPassword}
+                errorText={errors.userpassword?.message}
+                isError={!!errors.userpassword}
                 {...field}
               />
             )}
           />
-
+          <Controller
+            name="usercity"
+            control={control}
+            render={({ field }) => (
+              <Input
+                type="text"
+                placeholder="Ваш город"
+                errorText={errors.usercity?.message}
+                isError={!!errors.usercity}
+                {...field}
+              />
+            )}
+          />
           <Button isPrimary={isValid} buttonText="Создать аккаунт" />
         </form>
       </StyledRegistrationPage>
