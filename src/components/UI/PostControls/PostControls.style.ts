@@ -1,19 +1,21 @@
-import styled from "styled-components";
+import styled, {css} from "styled-components";
 
-export const StyledPost = styled.div`
+interface IStyleedPostProps{
+  $isLiked:boolean
+  $isMarked:boolean
+}
+
+export const StyledPost = styled.div<IStyleedPostProps>`
 
   display: grid;
   grid-template-columns: repeat(3, auto) 2fr;
-
   justify-content: center;
   align-items: center;
-
   gap: 15px;
-
   .icon-wrapper {
     cursor: pointer;
     padding: 10px;
-    background-color: var(--bgc);
+    background-color: ${props => props.theme.colors.bgc};
     border-radius: 15px;
 
     display: flex;
@@ -29,11 +31,11 @@ export const StyledPost = styled.div`
     user-select: none;
 
     &:hover {
-      background-color: var(--light-gray);
+      background-color: ${props => props.theme.colors.lightGray};
     }
 
     .count {
-      color: var(--dark-gray);
+      color: ${props => props.theme.colors.darkGray};
       font-weight: 400;
     }
 
@@ -45,12 +47,12 @@ export const StyledPost = styled.div`
     }
 
     .icon-like {
-      stroke: var(--dark-gray);
+      stroke: ${props => props.theme.colors.darkGray};
       stroke-width: 2px;
     }
 
     .icon-mark {
-      stroke: var(--dark-gray);
+      stroke: ${props => props.theme.colors.darkGray};
       stroke-width: 2px;
     }
 
@@ -58,31 +60,33 @@ export const StyledPost = styled.div`
       justify-self: self-end;
     }
   }
-  
-
-
-  &._liked {
-    .icon-wrapper {
+${props => props.$isLiked && css`
+  .icon-wrapper {
       .icon-like {
-        fill: var(--red);
+        fill: ${props => props.theme.colors.red};
         stroke: 0;
         stroke-width: 0;
       }
 
       .likes-count {
-        color: var(--red);
+        color: ${props => props.theme.colors.red};
       }
     }
-  }
+`}
 
-  &._marked {
-    .icon-wrapper {
+${props => props.$isMarked && css`
+  .icon-wrapper {
       .icon-mark {
-        fill: var(--prime-color);
+        fill:  ${props => props.theme.colors.primeColor};
         stroke: 0;
         stroke-width: 0;
       }
     }
-  }
+`}
+
+  
+
+
+
 
 `;

@@ -1,12 +1,22 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { baseUrl } from "../../Utils/baseUrl"; 
 
-// Интерфейсы для типов данных
 interface IPost {
-  id: number;
-  user_id: number;
   main_text: string;
-  // Добавьте другие поля поста, если необходимо
+  user_id: number;
+  id: number;
+  reg_date: string;
+  user_fk: {
+    user_city: string;
+    phone_number: string;
+    reg_date: string;
+    email: string;
+    id: number;
+    name: string;
+    password: string;
+  };
+  photos: string[];
+  comments: string[];
 }
 
 interface ICreatePostPayload {
@@ -25,15 +35,15 @@ interface IDeletePostPayload {
 
 interface IGetPostsResponse {
   status: number;
-  posts: IPost[];
+  message: IPost[];
 }
 
 export const postApi = createApi({
   reducerPath: "postApi",
   baseQuery: fetchBaseQuery({ baseUrl: baseUrl }),
   endpoints: (builder) => ({
-    getPosts: builder.query<IGetPostsResponse, number | void>({
-      query: (postId) => (postId ? `/posts/${postId}` : '/posts'),
+    getPosts: builder.query<IGetPostsResponse, null>({
+      query: () => '/post',
     }),
     createPost: builder.mutation<IPost, ICreatePostPayload>({
       query: (payload) => ({
@@ -64,4 +74,5 @@ export const {
   useCreatePostMutation,
   useUpdatePostMutation,
   useDeletePostMutation,
+  useLazyGetPostsQuery,
 } = postApi;

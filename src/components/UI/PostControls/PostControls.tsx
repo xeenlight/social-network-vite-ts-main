@@ -4,12 +4,15 @@ import { StyledPost } from "./PostControls.style";
 interface PostControlsProps {
     likesCount: number;
     commentsCount: number;
+    isLiked:boolean
+    isMarked:boolean
 }
 
-export const PostControls: React.FC<PostControlsProps> = ({ likesCount, commentsCount }) => {
+export const PostControls: React.FC<PostControlsProps> = ({ likesCount, commentsCount, isLiked,  isMarked}) => {
     return (
-        <StyledPost>
-            <div className="icon-wrapper like">
+        <StyledPost $isLiked={isLiked} $isMarked={isMarked}>
+
+            <div className="icon-wrapper like" >
                 <span className="count likes-count">{likesCount}</span>
                 <svg
                     className="icon icon-like"

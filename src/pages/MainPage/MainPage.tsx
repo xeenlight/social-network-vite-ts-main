@@ -18,14 +18,15 @@ import { PostContainer } from "../../components/UI/PostContainer/PostContainer";
 import { PostRepost } from "../../components/UI/PostRepost/PostRepost";
 import { Music } from "../../components/UI/Music/Music";
 import { ContainerMain } from "../../components/UI/ContainerMain/ContainerMain";
-
+import { useGetPostsQuery } from "../../Store/Api/postApi";
 
 export const MainPage = () => {
+  const { data } = useGetPostsQuery(null);
+
   return (
     <Container>
       <Header />
       <ContainerMain>
-
         <aside className="LeftSide">
           <nav className="Navbar">
             <ul className="navbar__list">
@@ -242,7 +243,49 @@ export const MainPage = () => {
             />
           </History>
 
-          <PostContainer>
+          {data?.message.length &&
+            data.message.map((elem) => (
+              <PostContainer>
+                <PostUserElem
+                  imgSrc="./img/users/aleksandr-maykov.jpeg"
+                  alt={elem.user_fk.name}
+                  href="#"
+                  hrefText={elem.user_fk.name}
+                  time={elem.reg_date}
+                />
+
+                <Text headingText={elem.main_text} />
+
+                <Post>
+                  <Content src="./img/post/nature-1.png" alt="Post Item" />
+                  <Content src="./img/post/nature-1.png" alt="Post Item" />
+                  <Content src="./img/post/nature-1.png" alt="Post Item" />
+                  <Content src="./img/post/nature-1.png" alt="Post Item" />
+                  <Content src="./img/post/nature-1.png" alt="Post Item" />
+                  <Content src="./img/post/nature-1.png" alt="Post Item" />
+                </Post>
+
+                <PostControls
+                  likesCount={10}
+                  commentsCount={5}
+                  isLiked
+                  isMarked={false}
+                />
+
+                <CommentBlock
+                  userImage="./img/users/aleksandr-maykov.jpeg"
+                  userName="Карина Савина"
+                  commentText="000"
+                  replyLink="#"
+                  href="#"
+                  date="0 марта"
+                />
+
+                <More />
+              </PostContainer>
+            ))}
+
+          {/* <PostContainer>
             <PostUserElem
               imgSrc="./img/users/aleksandr-maykov.jpeg"
               alt="User"
@@ -262,7 +305,7 @@ export const MainPage = () => {
               <Content src="./img/post/nature-1.png" alt="Post Item" />
             </Post>
 
-            <PostControls likesCount={0} commentsCount={0} />
+            <PostControls likesCount={10} commentsCount={5} isLiked isMarked={false} />
 
             <CommentBlock
               userImage="./img/users/aleksandr-maykov.jpeg"
@@ -310,7 +353,7 @@ export const MainPage = () => {
             />
 
             <More />
-          </PostContainer>
+          </PostContainer> */}
         </main>
         <aside className="RightSide">
           <List title="Близкие друзья" count={0}>
@@ -378,7 +421,6 @@ export const MainPage = () => {
             />
           </List>
         </aside>
-
       </ContainerMain>
     </Container>
   );
