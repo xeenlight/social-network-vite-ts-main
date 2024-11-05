@@ -5,6 +5,7 @@ import { ForgotPassword } from "./pages/ForgotPassword/ForgotPassword";
 import { PhoneSMS } from "./pages/PhoneSMS/PhoneSMS";
 import { RepeatPassword } from "./pages/RepeatPassword/RepeatPassword";
 import { RegistrationPage } from "./pages/RegistrationPage/RegistrationPage";
+import { PostPage } from "./pages/PostPage/PostPage";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
 function App() {
@@ -37,6 +38,10 @@ function App() {
     {
       path:"/registration-page",
       element:<RegistrationPage/>
+    },
+    {
+      path:"/post/:postId",
+      element:<PostPage/>
     },
   ])
 

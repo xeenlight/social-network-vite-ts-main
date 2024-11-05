@@ -15,7 +15,7 @@ import { PostControls } from "../../components/UI/PostControls/PostControls";
 import { CommentBlock } from "../../components/UI/CommentBlock/CommentBlock";
 import { More } from "../../components/UI/More/More";
 import { PostContainer } from "../../components/UI/PostContainer/PostContainer";
-import { PostRepost } from "../../components/UI/PostRepost/PostRepost";
+
 import { Music } from "../../components/UI/Music/Music";
 import { ContainerMain } from "../../components/UI/ContainerMain/ContainerMain";
 import { useGetPostsQuery } from "../../Store/Api/postApi";

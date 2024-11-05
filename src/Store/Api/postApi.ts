@@ -19,10 +19,7 @@ interface IPost {
   comments: string[];
 }
 
-interface ICreatePostPayload {
-  user_id: number;
-  main_text: string;
-}
+
 
 interface IUpdatePostPayload {
   post_id: number;
@@ -37,6 +34,10 @@ interface IGetPostsResponse {
   status: number;
   message: IPost[];
 }
+interface IGetPostListByIdResponse {
+  status: number;
+  message: IPost;
+}
 
 export const postApi = createApi({
   reducerPath: "postApi",
@@ -45,12 +46,8 @@ export const postApi = createApi({
     getPosts: builder.query<IGetPostsResponse, null>({
       query: () => '/post',
     }),
-    createPost: builder.mutation<IPost, ICreatePostPayload>({
-      query: (payload) => ({
-        url: '/posts',
-        method: 'POST',
-        body: payload,
-      }),
+    getPostListById: builder.query<IGetPostListByIdResponse, string>({
+      query: (postId) => `post?post_id=${postId}`,
     }),
     updatePost: builder.mutation<IPost, IUpdatePostPayload>({
       query: ({ post_id, new_text }) => ({
@@ -71,7 +68,7 @@ export const postApi = createApi({
 // Экспорт хука для использования в компонентах
 export const {
   useGetPostsQuery,
-  useCreatePostMutation,
+  useLazyGetPostListByIdQuery,
   useUpdatePostMutation,
   useDeletePostMutation,
   useLazyGetPostsQuery,
