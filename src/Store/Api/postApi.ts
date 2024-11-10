@@ -1,7 +1,7 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { baseUrl } from "../../Utils/baseUrl"; 
+import { baseUrl } from "../../Utils/baseUrl";
 
-interface IPost {
+export interface IPost {
   main_text: string;
   user_id: number;
   id: number;
@@ -19,24 +19,34 @@ interface IPost {
   comments: string[];
 }
 
-
-
-interface IUpdatePostPayload {
-  post_id: number;
-  new_text: string;
-}
-
-interface IDeletePostPayload {
-  post_id: number;
-}
-
 interface IGetPostsResponse {
   status: number;
   message: IPost[];
 }
+
 interface IGetPostListByIdResponse {
   status: number;
   message: IPost;
+}
+
+interface IAddPostPayload {
+  user_id: number;
+  main_text: string;
+}
+
+interface IAddPostResponse {
+  status: number;
+  post_id: number;
+}
+
+interface IEditPostPayload {
+  post_id: number;
+  new_text: string;
+}
+
+interface IEditPostResponse {
+  status: number;
+  message: string;
 }
 
 export const postApi = createApi({
@@ -44,22 +54,26 @@ export const postApi = createApi({
   baseQuery: fetchBaseQuery({ baseUrl: baseUrl }),
   endpoints: (builder) => ({
     getPosts: builder.query<IGetPostsResponse, null>({
-      query: () => '/post',
+      query: () => "/post",
     }),
+
     getPostListById: builder.query<IGetPostListByIdResponse, string>({
-      query: (postId) => `post?post_id=${postId}`,
+      query: (postId) => `/post/${postId}`,
     }),
-    updatePost: builder.mutation<IPost, IUpdatePostPayload>({
-      query: ({ post_id, new_text }) => ({
-        url: `/posts/${post_id}`,
-        method: 'PUT',
-        body: { new_text },
+
+    addNewPost: builder.mutation<IAddPostResponse, IAddPostPayload>({
+      query: (payload) => ({
+        url: "/post",
+        method: "POST",
+        body: payload,
       }),
     }),
-    deletePost: builder.mutation<void, IDeletePostPayload>({
-      query: ({ post_id }) => ({
-        url: `/posts/${post_id}`,
-        method: 'DELETE',
+
+    editPost: builder.mutation<IEditPostResponse, IEditPostPayload>({
+      query: (payload) => ({
+        url: "/post",
+        method: "PUT",
+        body: payload,
       }),
     }),
   }),
@@ -69,7 +83,5 @@ export const postApi = createApi({
 export const {
   useGetPostsQuery,
   useLazyGetPostListByIdQuery,
-  useUpdatePostMutation,
-  useDeletePostMutation,
   useLazyGetPostsQuery,
 } = postApi;
