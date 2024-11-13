@@ -36,6 +36,7 @@ export const LoginPage = () => {
   useEffect(() => {
     if (isSuccess && newData?.user_id) {
       navigate("/profile-page");
+      localStorage.setItem("newData", JSON.stringify(newData.user_id))
     }
   }, [isSuccess, newData, navigate]);
 

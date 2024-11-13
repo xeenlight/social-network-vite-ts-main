@@ -2,10 +2,11 @@ import Modal from "react-modal";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
-import { IPost } from "../../Store/Api/postApi";
+import { IPost, useAddNewPostMutation } from "../../Store/Api/postApi";
 import { SPostForm, SPostButtonContainer } from "./PostPage.style";
 import { Input } from "../../components/UI/Input/Input";
 import { Button } from "../../components/UI/Button/Button";
+import { useUserId } from "../../hooks/useUserId";
 
 // Стиль для модального окна
 const customStyles = {
@@ -28,7 +29,7 @@ const AddNewPostScheme = yup.object({
 // Интерфейс для свойств компонента
 interface IAddPostProps {
   openModal: boolean;
-  onCloseModal?: () => void;
+  onCloseModal: () => void;
   post?: IPost;
 }
 
@@ -49,11 +50,26 @@ export const AddNewPost = ({ openModal, onCloseModal }: IAddPostProps) => {
     },
   });
 
-  // Обработчик отправки формы
-  const addNewPostSubmit: SubmitHandler<IAddPostSubmit> = (data) => {
-    console.log(data);
-  };
 
+  const userId = useUserId();
+  console.log(userId);
+  const [fetchTrigger, { data, isSuccess, isLoading }] =
+    useAddNewPostMutation();
+  const addNewPostSubmit: SubmitHandler<{ mainText: string }> = (data) => {
+    if (data) {
+      const payload = {
+        user_id: Number(userId),
+        main_text: data.mainText,
+      };
+      fetchTrigger(payload);
+      onCloseModal();
+    }
+    if (isSuccess) {
+    onCloseModal();
+  }
+  }
+  
+  
   return (
     <Modal
       isOpen={openModal}
@@ -77,8 +93,14 @@ export const AddNewPost = ({ openModal, onCloseModal }: IAddPostProps) => {
         />
 
         <SPostButtonContainer>
-          <Button buttonText="Сохранить" isPrimary type="submit" />
           <Button
+            disabled={isLoading}
+            buttonText="Сохранить"
+            isPrimary
+            type="submit"
+          />
+          <Button
+            disabled={isLoading}
             buttonText="Отменить"
             isPrimary={false}
             onClick={() => {

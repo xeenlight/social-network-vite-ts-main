@@ -22,6 +22,7 @@ import { useGetPostsQuery } from "../../Store/Api/postApi";
 
 export const MainPage = () => {
   const { data } = useGetPostsQuery(null);
+ 
 
   return (
     <Container>
@@ -285,75 +286,7 @@ export const MainPage = () => {
               </PostContainer>
             ))}
 
-          {/* <PostContainer>
-            <PostUserElem
-              imgSrc="./img/users/aleksandr-maykov.jpeg"
-              alt="User"
-              href="#"
-              hrefText="Александр Майков"
-              time="Сегодня 00:00"
-            />
 
-            <Text headingText="Момент умиротворения и спокойствия" />
-
-            <Post>
-              <Content src="./img/post/nature-1.png" alt="Post Item" />
-              <Content src="./img/post/nature-1.png" alt="Post Item" />
-              <Content src="./img/post/nature-1.png" alt="Post Item" />
-              <Content src="./img/post/nature-1.png" alt="Post Item" />
-              <Content src="./img/post/nature-1.png" alt="Post Item" />
-              <Content src="./img/post/nature-1.png" alt="Post Item" />
-            </Post>
-
-            <PostControls likesCount={10} commentsCount={5} isLiked isMarked={false} />
-
-            <CommentBlock
-              userImage="./img/users/aleksandr-maykov.jpeg"
-              userName="Карина Савина"
-              commentText="000"
-              replyLink="#"
-              href="#"
-              date="0 марта"
-            />
-
-            <More />
-          </PostContainer>
-
-          <PostContainer>
-            <PostUserElem
-              imgSrc="./img/users/mark-krahmalev.jpeg"
-              alt="User"
-              href="#"
-              hrefText="Марк Крахмалев"
-              time="20 марта 23:31"
-            />
-            <PostRepost>
-              <PostUserElem
-                imgSrc="./img/users/aleksandr-maykov.jpeg"
-                alt="User"
-                href="#"
-                hrefText="Александр Майков"
-                time="Сегодня 00:00"
-              />
-              <Post>
-                <Content src="./img/post/garnet-man.png" alt="Post Item" />
-                <Content src="./img/post/garnet.png" alt="Post Item" />
-              </Post>
-            </PostRepost>
-
-            <PostControls likesCount={0} commentsCount={0} />
-
-            <CommentBlock
-              userImage="./img/users/aleksandr-maykov.jpeg"
-              userName="Карина Савина"
-              commentText="000"
-              replyLink="#"
-              href="#"
-              date="0 марта"
-            />
-
-            <More />
-          </PostContainer> */}
         </main>
         <aside className="RightSide">
           <List title="Близкие друзья" count={0}>
